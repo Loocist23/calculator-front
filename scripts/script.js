@@ -116,7 +116,7 @@ function evaluateExpression(expression) {
   let expr = expression.replace(/x/g, '*');
   
   // Extraire tous les tokens (nombres et opérateurs)
-  const tokens = expr.match(/(-?\d+\.?\d*|[\+\-\*\/])/g);
+  const tokens = expr.match(/(\d+\.?\d*|[\+\-\*\/])/g);
   
   if (!tokens || tokens.length === 0) {
     return NaN;
@@ -223,7 +223,10 @@ document.addEventListener("keydown", keyboardInputHandler);
 function keyboardInputHandler(e) {
   // to fix the default behavior of browser,
   // enter and backspace were causing undesired behavior when some key was already in focus.
-  e.preventDefault();
+  // Only prevent default for keys that shouldn't have browser default behavior
+  if (['Enter', 'Backspace'].includes(e.key)) {
+    e.preventDefault();
+  }
   //grabbing the liveScreen
 
   const isOperator = ['+', '-', '*', '/', 'x'].includes(e.key);
@@ -280,6 +283,11 @@ function keyboardInputHandler(e) {
 
   //press enter to see result
   if (e.key === "Enter") {
+    calculate(res.value);
+  }
+  
+  //press = to see result (alternative to Enter)
+  if (e.key === "=") {
     calculate(res.value);
   }
 

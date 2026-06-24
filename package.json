@@ -1,0 +1,32 @@
+{
+  "name": "calculator",
+  "version": "1.0.0",
+  "description": "A simple Calculator App built with HTML, CSS, and JavaScript. It also has a Dark Mode.",
+  "main": "index.js",
+  "scripts": {
+    "test": "playwright test",
+    "test:ui": "playwright test --ui",
+    "test:headed": "playwright test --headed",
+    "test:debug": "playwright test --debug",
+    "test:chrome": "playwright test --project=chromium",
+    "test:firefox": "playwright test --project=firefox",
+    "test:webkit": "playwright test --project=webkit",
+    "serve": "npx serve -l 3001 ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Loocist23/calculator-front.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/Loocist23/calculator-front/issues"
+  },
+  "homepage": "https://github.com/Loocist23/calculator-front#readme",
+  "devDependencies": {
+    "@playwright/test": "^1.61.0",
+    "serve": "^14.2.6"
+  }
+}

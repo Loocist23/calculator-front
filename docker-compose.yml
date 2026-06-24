@@ -1,0 +1,31 @@
+version: '3.8'
+
+services:
+  app:
+    build: .
+    container_name: calculator-tests
+    # Monter le répertoire courant pour voir les rapports
+    volumes:
+      - .:/app
+      - /tmp:/tmp
+    # Exposer le port 3001 pour le serveur web
+    ports:
+      - "3001:3001"
+    # Mode interactif pour voir les logs
+    tty: true
+    # Variables d'environnement pour CI (désactive le mode parallèle)
+    environment:
+      - CI=false
+    # Allouer plus de ressources pour accélérer les tests
+    cpus: 4
+    mem_limit: 2g
+
+  # Service optionnel pour lancer juste le serveur
+  serve:
+    build: .
+    container_name: calculator-serve
+    ports:
+      - "3002:3002"
+    command: npm run serve
+    volumes:
+      - .:/app
