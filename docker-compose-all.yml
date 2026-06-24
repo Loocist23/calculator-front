@@ -1,0 +1,58 @@
+version: '3.8'
+
+# Services disponibles :
+# - frontend: Frontend sur le port 3001
+# - api-js: API JavaScript sur le port 3000
+# - api-python: API Python sur le port 3000
+# - api-java: API Java sur le port 3000
+
+# --- SERVICES FRONTEND ---
+frontend:
+  build:
+    context: ../
+    dockerfile: ../docker-compose.yml
+  container_name: calculator-frontend
+  ports:
+    - "3001:3001"
+  environment:
+    - CI=false
+  cpus: 4
+  mem_limit: 2g
+  tty: true
+
+# --- SERVICES API JAVASCRIPT ---
+api-js:
+  build:
+    context: ../calculator-api-js
+    dockerfile: ../calculator-api-js/Dockerfile
+  container_name: calculator-api-js
+  ports:
+    - "3000:3000"
+  environment:
+    - NODE_ENV=production
+  command: sh -c "npm run lint && npm test && npm start"
+  volumes:
+    - ../calculator-api-js:/app
+    - /app/node_modules
+
+# --- SERVICES API PYTHON ---
+api-python:
+  build:
+    context: ../calculator-api-python
+    dockerfile: ../calculator-api-python/Dockerfile
+  container_name: calculator-api-python
+  ports:
+    - "3000:3000"
+  environment:
+    - PORT=3000
+    - PYTHONUNBUFFERED=1
+    - PYTHONDONTWRITEBYTECODE=1
+
+# --- SERVICES API JAVA ---
+api-java:
+  build:
+    context: ../calculator-api-java
+    dockerfile: ../calculator-api-java/Dockerfile
+  container_name: calculator-api-java
+  ports:
+    - "3000:3000"
